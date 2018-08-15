@@ -5,11 +5,15 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import Button from '../components/Button/Button';
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe('<Button />', () => {
   it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Button />, div);
+    shallow(<Button />);
+  });
+
+  it('should render a button a value of its "name" prop', () => {
+    const root = shallow(<Button name="name" />);
+    const instance = root.instance();
+
+    expect(root.find('button').text()).toEqual('name');
   });
 });
