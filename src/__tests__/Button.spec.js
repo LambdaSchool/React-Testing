@@ -1,15 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 
 import Button from '../components/Button/Button';
-
-Enzyme.configure({ adapter: new Adapter() });
+import Panel from '../components/Panel/Panel';
 
 describe('<Button />', () => {
   it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Button />, div);
+    shallow(<Button />);
+  });
+
+  it('has the component-button class', () => {
+    const wrapper = shallow(<Button />);
+
+    const compButton = wrapper.find('.component-button');
+
+    expect(compButton.length).toBe(1);
+  });
+
+  describe('props are being passed down correctly into button', () => {
+    it('props being passed correctly', () => {
+      const wrapper = shallow(<Button name="AC" />);
+
+      const butProp = wrapper.find('button');
+
+      expect(butProp.text()).toEqual('AC');
+    });
+
+    it('has the component-button orange class', () => {
+      const wrapper = shallow(<Button orange />);
+
+      const orange = wrapper.find('.orange');
+
+      expect(orange).toHaveLength(1);
+    });
+
+    it('has the component-button wide class', () => {
+      const wrapper = shallow(<Button wide />);
+
+      const wide = wrapper.find('.wide');
+
+      expect(wide).toHaveLength(1);
+    });
   });
 });
